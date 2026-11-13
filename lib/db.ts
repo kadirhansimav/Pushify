@@ -94,7 +94,7 @@ const globalForDb = globalThis as unknown as { __pushifyDb?: Promise<Db> };
 
 export function getDb(): Promise<Db> {
   if (!globalForDb.__pushifyDb) {
-    const url = process.env.DATABASE_URL;
+    const url = process.env.DATABASE_URL || process.env.POSTGRES_URL;
     globalForDb.__pushifyDb = (url ? createPgDb(url) : createPgliteDb()).catch((err) => {
       globalForDb.__pushifyDb = undefined;
       throw err;
